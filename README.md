@@ -35,6 +35,8 @@ This command invokes the script which creates a directory named `test` and cuts 
 Note that the default is to rotate the video clockwise.
 You can change it with `-transpose` option.
 
+This script need ffmpeg.
+
 ## `depthimage` directory
 
 ### `_concat_depthimage.ps1`
