@@ -35,7 +35,7 @@ Param(
     [Alias("transpose")]
     [Parameter()]
     [ValidateSet("clock", "cclock", "none")]
-    [string[]]
+    [string]
     $ImageRotation = "clock"
 )
 
@@ -109,9 +109,10 @@ $ss = [Math]::Round($ss, 3)
 
 
 
-$clockwise = @("-vf", ('transpose={0}' -f $ImageRotation))
+$convert_colorspace = 'format=yuv420p,scale=flags=accurate_rnd'
+$clockwise = @("-vf", ('transpose={0},{1}' -f  $ImageRotation, $convert_colorspace ))
 if ($ImageRotation -eq "none") {
-    $clockwise = @()
+    $clockwise = @("-vf", $convert_colorspace)
 }
 
 $param = @("-ss", $ss, "-i", $MovieFile) + $clockwise + @("-pix_fmt", "yuv420p", "-frames:v", $NumberOfImages, "-qmin", 1, "-q:v", 1, ("{0}\%06d.jpg" -f $DirectoryName))
